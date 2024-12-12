@@ -90,7 +90,8 @@
             "data/029Videob.mov",
             "data/029Videod.mov",
             "data/030Video0001-0106.mp4",
-            "data/silvester.mp4"
+            "data/silvester.mp4",
+            "data/WorkbenchToRender.mov"
         ];
 
 
@@ -103,11 +104,14 @@
             section.id = 'video-' + index;
 
             const video = document.createElement('video');
-            video.setAttribute('controls', 'true');
+            video.setAttribute('controls', 'false');
             video.setAttribute('src', videoFile);
-            video.setAttribute('autoplay', 'false');
+            video.setAttribute('autoplay', 'true');
             video.setAttribute('muted', 'true');
             video.setAttribute('loop', 'true');
+            // prevent fullscreen on mobile
+            video.setAttribute('playsinline', 'true');
+
 
             // Create anchor link to other sections
             const anchor = document.createElement('a');
