@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Gallery</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #000;
+        }
+
+        .video-section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        video {
+            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .title {
+            position: absolute;
+            top: 10%;
+            font-size: 3em;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 10%;
+            font-size: 2em;
+            color: white;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        a {
+            color: #fff;
+            position: absolute;
+            top: 90%;
+            font-size: 1.5em;
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="video-container">
+        <!-- Dynamic video sections will be inserted here -->
+    </div>
+
+    <script>
+        // Example video filenames (replace with actual file loading logic)
+        const videoFiles = [
+            "data/006Video.mp4",
+            "data/018Video.mov",
+            "data/021Video2.mp4",
+            "data/024Hochkant.mov",
+            "data/029Videob.mov",
+            "data/029Videod.mov",
+            "data/030Video0001-0106.mp4",
+            "data/silvester.mp4"
+        ];
+
+
+
+        const videoContainer = document.getElementById('video-container');
+
+        videoFiles.forEach((videoFile, index) => {
+            const section = document.createElement('section');
+            section.classList.add('video-section');
+            section.id = 'video-' + index;
+
+            const video = document.createElement('video');
+            video.setAttribute('controls', 'true');
+            video.setAttribute('src', videoFile);
+            video.setAttribute('autoplay', 'false');
+            video.setAttribute('muted', 'true');
+            video.setAttribute('loop', 'true');
+
+            // Create anchor link to other sections
+            const anchor = document.createElement('a');
+            anchor.href = `#video-${(index + 1) % videoFiles.length}`;
+            anchor.innerText = 'Next Video';
+
+            // Add title to first video section
+            if (index === 0) {
+                const title = document.createElement('div');
+                title.classList.add('title');
+                title.innerText = 'Blender Render';
+                section.appendChild(title);
+
+                const scrollIndicator = document.createElement('div');
+                scrollIndicator.classList.add('scroll-indicator');
+                scrollIndicator.innerText = '↓';
+                section.appendChild(scrollIndicator);
+            }
+
+            section.appendChild(video);
+            section.appendChild(anchor);
+            videoContainer.appendChild(section);
+        });
+    </script>
+</body>
+
+</html>
